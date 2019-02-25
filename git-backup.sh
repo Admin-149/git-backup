@@ -13,7 +13,6 @@ do
     # access by ssh key
     # key previously copied to ~/.ssh and add 'key' in data csv
 
-    FOLD="$(cut -d'/' -f2 <<< $WORKREPO)" # separated folder name
     REP=$WORKREPO
   else
     # access by password
@@ -21,9 +20,9 @@ do
 
     REP_NAME=${WORKREPO:8}
     REP="https://$LOGIN:$PASSWORD@$REP_NAME"
-    FOLD="$(cut -d'/' -f3 <<< $REP_NAME)" # separated folder name
   fi
-
+  
+  FOLD="$(rev <<< $WORKREPO | cut -d'/' -f 1 | rev)" # separated folder name
   FOLDER=${FOLD::-4} # removed '.git'
 
   if [ -d $FOLDER ] # check if folder exist
